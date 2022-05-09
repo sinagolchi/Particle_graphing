@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.lines import Line2D
 import matplotlib as mpl
-import seaborn as sns
-import numpy as np
 import streamlit as st
 mpl.rcParams['figure.dpi'] = 300
 #%%
