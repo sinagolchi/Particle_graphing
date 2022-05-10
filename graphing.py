@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib.lines import Line2D
 import matplotlib as mpl
 import streamlit as st
-mpl.rcParams['figure.dpi'] = 300
+mpl.rcParams['figure.dpi'] = 400
 #%%
 
 class range_set():
