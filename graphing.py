@@ -129,5 +129,5 @@ try:
     plt.gcf().set_size_inches(7,4)
     st.pyplot(plt.gcf())
 except Exception as ex:
-    print(ex)
+    st.error(ex)
     st.sidebar.warning('No file uploaded or format is incompatible')
