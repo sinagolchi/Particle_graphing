@@ -47,9 +47,9 @@ class data_set():
 
     def plot_all(self,legend_style='outside'):
         handles = []
-        self.colors = (c for c in ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'])
-        self.markers = (m for m in ['v','s','o','d'])
-        self.offset = (t for t in [-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5])
+        self.colors = (c for c in ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000','#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'])
+        self.markers = (m for m in ['v','s','o','d','^','<','>','8','1','3','4','v','s','o','d','^','<','>','8','1','3','4'])
+        self.offset = (t for t in [-2.8,-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5,2.8])
         self.num_keys1 = (k for k in range(1,50))
         self.num_keys2 = (k for k in range(50,100))
         self.check_keys = (k for k in range(100,150))
@@ -93,26 +93,27 @@ st.caption('Developed by Sina Golchi for NSERC Chair in Water Wreatment')
 with st.sidebar:
     csv = st.file_uploader(label='Upload CSV file',)
 
+
+dft = data_set(csv)
+
+with st.sidebar:
+    st.markdown('''___''')
+    st.caption('Axis options')
+    col1, col2  = st.columns(2)
+    with col1:
+        xmin = st.number_input(label='x min',value=-5)
+        ymin = st.number_input(label='y min', value=-1)
+    with col2:
+        xmax = st.number_input(label='x max',value=100)
+        ymax = st.number_input(label='y max', value=110)
+    xlog = st.checkbox(label='Logarithmic x axis')
+    ylog = st.checkbox(label='Logarithmic y axis')
+
+    st.markdown('''___''')
+    st.caption('Legend option')
+    L_type = st.selectbox(label='Legend type',options=['outside','inside','no legend'])
+
 try:
-    dft = data_set(csv)
-
-    with st.sidebar:
-        st.markdown('''___''')
-        st.caption('Axis options')
-        col1, col2  = st.columns(2)
-        with col1:
-            xmin = st.number_input(label='x min',value=-5)
-            ymin = st.number_input(label='y min', value=-1)
-        with col2:
-            xmax = st.number_input(label='x max',value=100)
-            ymax = st.number_input(label='y max', value=110)
-        xlog = st.checkbox(label='Logarithmic x axis')
-        ylog = st.checkbox(label='Logarithmic y axis')
-
-        st.markdown('''___''')
-        st.caption('Legend option')
-        L_type = st.selectbox(label='Legend type',options=['outside','inside','no legend'])
-
     dft.plot_all(legend_style=L_type)
 
     if xlog:
