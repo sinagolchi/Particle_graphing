@@ -53,6 +53,7 @@ class data_set():
         self.num_keys1 = (k for k in range(1,50))
         self.num_keys2 = (k for k in range(50,100))
         self.check_keys = (k for k in range(100,150))
+        self.text_keys = (k for k in range(150,200))
         for set in self.processed_sets:
             with st.expander(label=set.DWTP + ' ' + set.Study + ': propertise'):
                 col1, col2 , col3 , col4 = st.columns(4)
@@ -60,7 +61,7 @@ class data_set():
                     color = st.color_picker(label='Color', value=next(self.colors))
                     trend = st.checkbox(label='Show trend-line',value=True,key=next(self.check_keys))
                 with col2:
-                    marker = st.text_input(label='Marker style',value=next(self.markers))
+                    marker = st.text_input(label='Marker style',value=next(self.markers),key=next(self.text_keys))
                 with col3:
                     offset = st.number_input(label='Offset at 100%',value=float(next(self.offset)),step=0.1)
                 with col4:
@@ -69,7 +70,7 @@ class data_set():
 
             set.plot(handle=handles,color=color,marker=marker,offset=offset,show_trend_line=trend,alpha=alpha,trend_line_alpha=t_alpha)
         if legend_style == 'outside':
-            plt.legend(handles=handles,fontsize=9,loc='center right',bbox_to_anchor=[1.6,0.9])
+            plt.legend(handles=handles,fontsize=9,loc='center right',bbox_to_anchor=[1.6,0.5])
         elif legend_style == 'inside':
             plt.legend(handles=handles,fontsize=9)
         else:
@@ -129,6 +130,8 @@ try:
     plt.grid(axis='y',alpha=0.4)
     plt.gcf().set_size_inches(7,4)
     st.pyplot(plt.gcf())
+
 except Exception as ex:
+    
     st.error(str(ex))
     st.sidebar.warning('No file uploaded or format is incompatible')
