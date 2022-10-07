@@ -49,7 +49,8 @@ class data_set():
         handles = []
         self.colors = (c for c in ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000','#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'])
         self.markers = (m for m in ['v','s','o','d','^','<','>','8','1','3','4','v','s','o','d','^','<','>','8','1','3','4'])
-        self.offset = (t for t in [-2.8,-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5,2.8])
+        self.offset = (t for t in [-3,-2.9,-2.8,-2.7,-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5,2.7,2.8,2.9,3])
+        #self.offset = (t for t in [0,-0.5,+0.5,-1,1,-1.5,+1.5])
         self.num_keys1 = (k for k in range(1,50))
         self.num_keys2 = (k for k in range(50,100))
         self.check_keys = (k for k in range(100,150))
@@ -114,24 +115,24 @@ with st.sidebar:
     st.caption('Legend option')
     L_type = st.selectbox(label='Legend type',options=['outside','inside','no legend'])
 
-try:
-    dft.plot_all(legend_style=L_type)
+# try:
+dft.plot_all(legend_style=L_type)
 
-    if xlog:
-        plt.xscale('log')
-    if ylog:
-        plt.yscale('log')
+if xlog:
+    plt.xscale('log')
+if ylog:
+    plt.yscale('log')
 
-    plt.xlim(xmin, xmax)
-    plt.ylim(ymin, ymax)
+plt.xlim(xmin, xmax)
+plt.ylim(ymin, ymax)
 
-    plt.xlabel('Particle range [$\mu m$]')
-    plt.ylabel('Removal efficiency [%]')
-    plt.grid(axis='y',alpha=0.4)
-    plt.gcf().set_size_inches(7,4)
-    st.pyplot(plt.gcf())
+plt.xlabel('Particle range [$\mu m$]')
+plt.ylabel('Removal efficiency [%]')
+plt.grid(axis='y',alpha=0.4)
+plt.gcf().set_size_inches(7,4)
+st.pyplot(plt.gcf())
 
-except Exception as ex:
-    
-    st.error(str(ex))
-    st.sidebar.warning('No file uploaded or format is incompatible')
+# except Exception as ex:
+#
+#     st.error(str(ex))
+#     st.sidebar.warning('No file uploaded or format is incompatible')
