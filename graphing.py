@@ -48,23 +48,25 @@ class data_set():
     def plot_all(self,legend_style='outside'):
         handles = []
         self.colors = (c for c in ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000','#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000','#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff'])
-        self.markers = (m for m in ['v','s','o','d','^','<','>','8','1','3','4','v','s','o','d','^','<','>','8','1','3','4'])
+        self.markers = (m for m in ['v','s','o','d','^','<','>','8','1','3','4','v','s','o','d','^','<','>','8','1','3','4','v','s','o','d','^','<','>','8','1','3','4'])
         self.offset = (t for t in [-3.4,-3.3,-3.2,-3.1,-3,-2.9,-2.8,-2.7,-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5,2.7,2.8,2.9,3,3.1,3.2,3.2,3.3,3.4])
         #self.offset = (t for t in [0,-0.5,+0.5,-1,1,-1.5,+1.5])
-        self.num_keys1 = (k for k in range(1,50))
-        self.num_keys2 = (k for k in range(50,100))
-        self.check_keys = (k for k in range(100,150))
-        self.text_keys = (k for k in range(150,200))
+        self.num_keys1 = (k for k in range(1,100))
+        self.num_keys2 = (k for k in range(101,200))
+        self.check_keys = (k for k in range(200,300))
+        self.text_keys = (k for k in range(300,400))
+        self.color_keys = (k for k in range(500, 600))
+        self.num_keys3 = (k for k in range(600, 700))
         for set in self.processed_sets:
             with st.expander(label=set.DWTP + ' ' + set.Study + ': propertise'):
                 col1, col2 , col3 , col4 = st.columns(4)
                 with col1:
-                    color = st.color_picker(label='Color', value=next(self.colors))
+                    color = st.color_picker(label='Color', value=next(self.colors),key=next(self.color_keys))
                     trend = st.checkbox(label='Show trend-line',value=True,key=next(self.check_keys))
                 with col2:
                     marker = st.text_input(label='Marker style',value=next(self.markers),key=next(self.text_keys))
                 with col3:
-                    offset = st.number_input(label='Offset at 100%',value=float(next(self.offset)),step=0.1)
+                    offset = st.number_input(label='Offset at 100%',value=float(next(self.offset)),step=0.1,key=next(self.num_keys3))
                 with col4:
                     alpha = st.number_input(label='Transparency',value=1.0,min_value=0.2,max_value=1.0,step=0.1,key=next(self.num_keys1))
                     t_alpha = st.number_input(label='Trend-line Transparency',value=1.0,min_value=0.2,max_value=1.0,step=0.1,key=next(self.num_keys2))
