@@ -134,7 +134,7 @@ if ylog:
 plt.xlim(xmin, xmax)
 plt.ylim(ymin, ymax)
 
-plt.xlabel('Particle range [$\mu m$]')
+plt.xlabel(r'Particle size range [$ \rm \mu m$]')
 plt.ylabel('Removal efficiency [%]')
 plt.grid(axis='y',alpha=0.4)
 plt.gcf().set_size_inches(7,4)
