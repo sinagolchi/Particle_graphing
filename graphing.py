@@ -4,7 +4,12 @@ from matplotlib.lines import Line2D
 import matplotlib as mpl
 import streamlit as st
 mpl.rcParams['figure.dpi'] = 400
-#%%
+
+
+
+# mpl.rcParams['font.family'] = ['serif']
+# mpl.rcParams['font.serif'] = ['Times New Roman']
+mpl.rcParams['font.size'] = 11
 
 class range_set():
     def __init__(self,dataframe):
@@ -73,7 +78,8 @@ class data_set():
 
             set.plot(handle=handles,color=color,marker=marker,offset=offset,show_trend_line=trend,alpha=alpha,trend_line_alpha=t_alpha)
         if legend_style == 'outside':
-            plt.legend(handles=handles,fontsize=9,loc='center right',bbox_to_anchor=[1.6,0.5])
+            plt.legend(handles=handles,fontsize=11,loc='upper center',bbox_to_anchor=[0.5,-0.15]) #bbox_to_anchor=[1.6,0.5]
+
         elif legend_style == 'inside':
             plt.legend(handles=handles,fontsize=9)
         else:
@@ -132,6 +138,7 @@ plt.xlabel('Particle range [$\mu m$]')
 plt.ylabel('Removal efficiency [%]')
 plt.grid(axis='y',alpha=0.4)
 plt.gcf().set_size_inches(7,4)
+
 st.pyplot(plt.gcf())
 
 # except Exception as ex:
