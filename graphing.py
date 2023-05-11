@@ -3,41 +3,41 @@ import pandas as pd
 from matplotlib.lines import Line2D
 import matplotlib as mpl
 import streamlit as st
-mpl.rcParams['figure.dpi'] = 400
+mpl.rcParams['figure.dpi'] = 400 #increasing the resolution of created plots
 
 
 
 # mpl.rcParams['font.family'] = ['serif']
 # mpl.rcParams['font.serif'] = ['Times New Roman']
-mpl.rcParams['font.size'] = 11
+mpl.rcParams['font.size'] = 11 #setting the font size to 11 pt
 
-class range_set():
-    def __init__(self,dataframe):
-        self.data = dataframe
-        self.DWTP = self.data['DWTPs'][0]
-        self.Study = self.data['Study'][0]
+class range_set():  #a specific class to represent a set of results with ranges as individual enteries as opposed to points
+    def __init__(self,dataframe): #initialization of class, the subset of dataset is required for initiation
+        self.data = dataframe #loading the sub dataframe as data
+        self.DWTP = self.data['DWTPs'][0] #Identifying the Drinking Water Treatment Plant (DWTP) that the subset represents
+        self.Study = self.data['Study'][0] #Identifying the study (publication) that the subset is extracted from
 
-    def plot(self,handle:list(),color,marker,offset,alpha,show_trend_line,trend_line_alpha):
-        x = []
+    def plot(self,handle:list(),color,marker,offset,alpha,show_trend_line,trend_line_alpha): #The rendering instructions for ploting the data, The plot is similar to a scatter plot, however, each entery is consisiting of single Y value and a rang of X values, as opposed to single X value
+        x = [] #generating empty arrays (lists) for story x , y points, the x value here is the average value of the range provided
         y = []
-        for index, row in self.data.iterrows():
-            if row['Removal efficiency'] == 1:
-                plt.plot([row['Size range 1'],row['Size range 2']],[row['Removal efficiency']*100 + offset,row['Removal efficiency']*100+ offset],color,marker='|',alpha=alpha)
-                x.append((row['Size range 2']+row['Size range 1'])/2)
-                y.append(row['Removal efficiency']*100+offset)
-            else:
+        for index, row in self.data.iterrows(): #For loop to iterate over the subset enteries
+            if row['Removal efficiency'] == 1: #plotting scenario when y value is 1 (or 100%)
+                plt.plot([row['Size range 1'],row['Size range 2']],[row['Removal efficiency']*100 + offset,row['Removal efficiency']*100+ offset],color,marker='|',alpha=alpha) #plotting a horizontal line at the removal efficiency of y with "|" marker on each end to specify the range, the range limists are "size range 1" and "size range 2"
+                x.append((row['Size range 2']+row['Size range 1'])/2)#adding the average of the size range as x of the scatter point
+                y.append(row['Removal efficiency']*100+offset) #adding the removal efficiency as y of the scatter point, the point has an offset to avoid overlaying multiple lines at y = 1 or 100%
+            else: #same process for other y values but without the offset
                 plt.plot([row['Size range 1'], row['Size range 2']],
                          [row['Removal efficiency'] * 100, row['Removal efficiency'] * 100], color, marker='|',alpha=alpha)
                 x.append((row['Size range 2'] + row['Size range 1']) / 2)
                 y.append(row['Removal efficiency'] * 100)
-        if show_trend_line:
-            plt.plot(x,y,color=color,linestyle='--',alpha=trend_line_alpha)
-        plt.scatter(x, y, marker=marker, color=color)
+        if show_trend_line: #if enabled by the user, a dashed trendline will connect the averages (scatter points) for each subset
+            plt.plot(x,y,color=color,linestyle='--',alpha=trend_line_alpha) #drawing the scatter line
+        plt.scatter(x, y, marker=marker, color=color) #plotting the averages (scatter points) for the subset
 
-        handle.append(Line2D([0], [0], color=color, marker=marker, linestyle='-', markerfacecolor=color,label=self.DWTP + ', ' + self.Study))
+        handle.append(Line2D([0], [0], color=color, marker=marker, linestyle='-', markerfacecolor=color,label=self.DWTP + ', ' + self.Study))#generating legend handles based on the treatment plant and study of the subsets
 
 
-class data_set():
+class data_set(): #class for loading and processing data sets
     def __init__(self,path):
         self.data_set = pd.read_csv(path, header=0)
         self.DWTPs = self.data_set['DWTPs'].to_list()
